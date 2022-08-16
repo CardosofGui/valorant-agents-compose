@@ -121,7 +121,6 @@ class CharacterInfo : ComponentActivity() {
                 Dialog(
                     onDismissRequest = {
                         openDialogAbility.value = false
-                        Log.e("Fechar", "ERA PRA TER FECHADO")
                     },
                     properties = DialogProperties(usePlatformDefaultWidth = false),
                 ) {
@@ -258,7 +257,7 @@ class CharacterInfo : ComponentActivity() {
             mediaPlayer!!.start();
 
         } catch (e : Exception) {
-            Log.e("Deu ruim fi", "Olha o erro aqui $e")
+            Log.e("Error Audio", "$e")
         }
     }
 }

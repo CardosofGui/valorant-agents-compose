@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Valorant Characters</string>
-    <string name="title_activity_character_list">CharacterList</string>
+    <string name="app_name">Valorant Agents</string>
+    <string name="title_activity_character_list">Valorant Agents</string>
     <string name="title_activity_character_info">CharacterInfo</string>
 </resources>
