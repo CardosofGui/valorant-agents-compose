@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -20,10 +22,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -37,10 +36,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import coil.compose.rememberAsyncImagePainter
 import com.cardosofgui.valorantcharacters.framework.viewmodel.AgentViewModel
+import com.cardosofgui.valorantcharacters.presenter.ui.theme.ValorantCharactersTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import okhttp3.internal.filterList
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,11 +55,21 @@ class CharacterList : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         agentViewModel.getAllAgents()
-        this.window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         initFontFamily()
 
         setContent {
-            allContent()
+            ValorantCharactersTheme() {
+                val systemUiController = rememberSystemUiController()
+
+                SideEffect {
+                    systemUiController.setStatusBarColor(
+                        color = Color.Black,
+                        darkIcons = false
+                    )
+                }
+
+                allContent()
+            }
         }
     }
 
@@ -72,14 +84,14 @@ class CharacterList : ComponentActivity() {
     private fun allContent() {
         Scaffold(
             backgroundColor = Color(15, 24, 33, 235)
-        ) {}
-
-        mainContent()
+        ) {
+            mainContent()
+        }
     }
 
     @Composable
     private fun mainContent() {
-        val showEditText = remember { mutableStateOf(false  ) }
+        val showEditText = remember { mutableStateOf(false) }
         val agentEditText = remember { mutableStateOf("") }
 
         val agentList = remember { mutableStateOf(agentViewModel.agent) }
@@ -97,6 +109,7 @@ class CharacterList : ComponentActivity() {
                         .wrapContentHeight()
                         .weight(1f)
                 )
+
 
                 if(showEditText.value) {
                     OutlinedTextField(
@@ -140,7 +153,11 @@ class CharacterList : ComponentActivity() {
                         showEditText.value = !showEditText.value
 
                         if(showEditText.value) iconSearch.value = Icons.Filled.Close
-                        else iconSearch.value = Icons.Filled.Search
+                        else {
+                            agentList.value = agentViewModel.agent
+                            agentEditText.value = ""
+                            iconSearch.value = Icons.Filled.Search
+                        }
                     },
                     modifier = Modifier
                         .padding(12.dp)
@@ -189,7 +206,9 @@ class CharacterList : ComponentActivity() {
                                         agent!!.displayIcon
                                     ),
                                     contentDescription = "Person Image",
-                                    modifier = Modifier.size(120.dp)
+                                    modifier = Modifier
+                                        .size(120.dp)
+                                        .heightIn(min = 120.dp)
                                 )
 
                                 Column(

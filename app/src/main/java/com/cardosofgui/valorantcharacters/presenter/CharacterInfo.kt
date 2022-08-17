@@ -43,6 +43,7 @@ import androidx.core.content.ContextCompat
 import coil.compose.rememberAsyncImagePainter
 import com.cardosofgui.valorantcharacters.R
 import com.cardosofgui.valorantcharacters.presenter.ui.theme.ValorantCharactersTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.lang.Exception
 
 class CharacterInfo : ComponentActivity() {

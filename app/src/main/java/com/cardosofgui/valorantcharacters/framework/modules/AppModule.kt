@@ -1,9 +1,10 @@
 package com.cardosofgui.valorantcharacters.framework.modules
 
 import com.cardosofgui.valorantcharacters.data.AgentRepository
-import com.example.valorantcharacters.framework.EndPoint
+import com.cardosofgui.valorantcharacters.domain.EndPoint
 import com.cardosofgui.valorantcharacters.framework.viewmodel.AgentViewModel
 import com.cardosofgui.valorantcharacters.implementation.AgentImplementation
+import com.cardosofgui.valorantcharacters.usecase.GetAgentsUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
@@ -28,6 +29,8 @@ object AppModule {
             single<AgentRepository> { AgentRepository(get()) }
 
             single<AgentImplementation> { AgentImplementation(get()) }
+
+            single<GetAgentsUseCase> { GetAgentsUseCase(get()) }
         }
     }
 

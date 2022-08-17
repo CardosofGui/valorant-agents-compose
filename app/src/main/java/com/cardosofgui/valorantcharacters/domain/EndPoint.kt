@@ -1,4 +1,4 @@
-package com.example.valorantcharacters.framework
+package com.cardosofgui.valorantcharacters.domain
 
 import Agent
 import retrofit2.Call

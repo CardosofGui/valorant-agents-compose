@@ -1,7 +1,7 @@
 package com.cardosofgui.valorantcharacters.implementation
 
 import Agent
-import com.example.valorantcharacters.framework.EndPoint
+import com.cardosofgui.valorantcharacters.domain.EndPoint
 
 class AgentImplementation(private val valorantServiceAPI : EndPoint) {
 
